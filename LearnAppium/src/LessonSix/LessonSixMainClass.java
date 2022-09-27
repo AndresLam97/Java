@@ -1,33 +1,11 @@
 package LessonSix;
 
-import javax.xml.stream.events.Characters;
-import java.sql.SQLOutput;
 import java.util.*;
 
 public class LessonSixMainClass {
     public static void main(String[] args) {
-        //LessonSixMainClass lessonSix = new LessonSixMainClass();
-        //lessonSix.initMenu();
-        String s = "asd hrs 50 min";
-        String[] list = s.split("[ ]");
-        int totalMinutes = 0;
-        for(int index = 0; index < list.length; index++)
-        {
-            switch(list[index].toLowerCase())
-            {
-                case "hrs":
-                case "hr":
-                case "hour":
-                case "hours":
-                    if(index == 0) {continue;}
-                    if(checkDigitString(list[index-1]))
-                    {
-                        totalMinutes += Integer.parseInt(list[index-1]);
-                    }
-                    System.out.println(Integer.valueOf(list[index - 1]));
-            }
-        }
-
+        LessonSixMainClass lessonSix = new LessonSixMainClass();
+        lessonSix.initMenu();
     }
 
     void initMenu() {
@@ -69,29 +47,21 @@ public class LessonSixMainClass {
         // Declare variables
         String userString;
         String[] detachedList;
-        Map<Boolean,String> result = new HashMap<>();
+        Map<Boolean, String> result = new HashMap<>();
 
         // Get user input
         System.out.print("Enter your string: ");
         userString = new Scanner(System.in).nextLine();
 
         // Check string is empty or not
-        if(userString.isEmpty())
-        {
-            System.out.println("You entered an empty string. Please try again!");
+        if (userString.isEmpty()) {
+            System.out.println("You entered an empty string. Please retry again!");
             return;
         }
 
         detachedList = userString.split("[ ]");
-        result = checkUserInputString(detachedList);
 
-        if(result.containsKey(false))
-        {
-            System.out.printf("%s", result.get(false));
-            return;
-        }
-
-
+        System.out.printf("The total minute(s) is: %d\n", calculateMinutes(detachedList));
     }
 
     public void Lab62() {
@@ -108,7 +78,7 @@ public class LessonSixMainClass {
                 break;
             } else {
                 if (totalEnterTime != 2) {
-                    System.out.println("You entered the wrong password. Please try again!");
+                    System.out.println("You entered the wrong password. Please retry again!");
                     totalEnterTime++;
                 } else {
                     System.out.println("You entered incorrect password for 3 times. Please re-run the lab!");
@@ -160,7 +130,7 @@ public class LessonSixMainClass {
 
         // Check string is empty or not
         if (myUrl.isEmpty()) {
-            System.out.println("You entered an empty url. Please try again!");
+            System.out.println("You entered an empty url. Please retry again!");
             return;
         }
 
@@ -179,33 +149,47 @@ public class LessonSixMainClass {
 
     }
 
-    public Map<Boolean,String> checkUserInputString(String[] list)
-    {
-        int totalMinutes;
-        for(int index = 0; index < list.length; index++)
-        {
-            switch(list[index].toLowerCase())
-            {
+    public static boolean checkDigitString(String string) {
+        boolean result = true;
+        for (int index = 0; index < string.length(); index++) {
+            if (Character.isDigit(string.charAt(index))) {
+                continue;
+            }
+            return false;
+        }
+        return true;
+    }
+
+    public int calculateMinutes(String[] list) {
+        int totalMinutes = 0;
+        for (int index = 0; index < list.length; index++) {
+            switch (list[index].toLowerCase()) {
                 case "hrs":
                 case "hr":
                 case "hour":
                 case "hours":
-                    if(index == 0) { continue;}
+                case "h":
+                    if (index == 0) {
+                        continue;
+                    }
+                    if (checkDigitString(list[index - 1])) {
+                        totalMinutes += (Integer.parseInt(list[index - 1]) * 60);
+                    }
+                    break;
+                case "min":
+                case "minutes":
+                case "m":
+                case "p":
+                    if (index == 0) {
+                        continue;
+                    }
+                    if (checkDigitString(list[index - 1])) {
+                        totalMinutes += Integer.parseInt(list[index - 1]);
+                    }
+                    break;
             }
         }
-
-        return null;
-    }
-
-    public static boolean checkDigitString(String string)
-    {
-        boolean result = true;
-        for(int index = 0 ; index < string.length() ; index++)
-        {
-            if(Character.isDigit(string.charAt(index))) { continue;}
-            return false;
-        }
-        return true;
+        return totalMinutes;
     }
 
     public String getDomainSuffix(String domain) {
@@ -236,20 +220,21 @@ public class LessonSixMainClass {
         // Check domain suffix
         switch (getDomainSuffix(list[1]).toLowerCase()) {
             case "com":
-                break;
+            case "org":
+            case "vn":
             case "net":
+                break;
             default:
                 result.put(false, "You have entered an url with incorrect domain's suffix, please retry again!");
                 return result;
         }
-
         result.put(true, "Correct URL");
         return result;
     }
 
     public void displayUrlData(String[] list) {
-        // If url doesn't have suffix, display the information in the if statement
-        // If url have suffix, display the information in the else statement
+        // If url doesn't have sub path, display the information in the if statement
+        // If url have sub path, display the information in the else statement
         if (list.length < 3) {
             System.out.printf("Protocol: %s\n", list[0]);
             System.out.printf("Domain: %s\n", list[1]);
