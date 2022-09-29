@@ -1,4 +1,4 @@
-package Employees;
+package LessonSeven;
 
 public class Employee {
 
