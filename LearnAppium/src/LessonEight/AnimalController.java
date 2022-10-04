@@ -20,7 +20,7 @@ public class AnimalController {
 
     public static void raceCompetition(List<Animal> animalList) {
         if (animalList.isEmpty()) {
-            System.out.println("The is no any animal for this race, please retry again!");
+            System.out.println("There is no any animal for this race, please retry again!");
             return;
         }
         Collections.sort(animalList, (a1, a2) -> a1.getSpeed() > a2.getSpeed() ? -1 : 1);
