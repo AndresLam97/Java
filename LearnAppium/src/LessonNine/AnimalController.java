@@ -7,24 +7,32 @@ import static LessonNine.Animal.AnimalBuilder;
 
 public class AnimalController {
 
-    private static String[] animalNameList = {"Mouse", "Cat", "Dog", "Tiger", "Lion",
-            "Bear", "Pig", "Goat", "Fox", "Cow",
-            "Horse", "Rabbit", "Eagle", "Falcon", "Owl", "Snake"};
+    private static Map<String, Integer> animalDefaultList = AnimalData.getDefaultAnimalData();
 
-    public static List<Animal> generateAnimalList() {
+    public static void lab9WithAuto() {
+        List<Animal> animalList = generateAnimalListAuto();
+        raceCompetition(animalList);
+    }
+
+    public static void lab9WithManual() {
+        List<Animal> animalList = generateAnimalListManual();
+        raceCompetition(animalList);
+    }
+
+    private static List<Animal> generateAnimalListAuto() {
         // Init variables
         int totalAnimal;
         Map<String, Integer> animalCountList = new HashMap<>();
         List<Animal> animalList = new ArrayList<>();
+        animalDefaultList = AnimalData.getDefaultAnimalData();
 
         // Get user input
-        System.out.printf("Enter the total of animal: ");
-        totalAnimal = new Scanner(System.in).nextInt();
+        totalAnimal = getTotalAnimal();
 
         // Auto generate animal
         for (int index = 0; index < totalAnimal; index++) {
             AnimalBuilder animalBuilder = new AnimalBuilder();
-            String animalName = getAnimalName(new SecureRandom().nextInt(animalNameList.length));
+            String animalName = getAnimalName(new SecureRandom().nextInt(animalDefaultList.size()));
             int animalSpeed = getAnimalSpeed(animalName);
             boolean flyAbleAnimal = getFlyAbleKey(animalName);
             if (animalCountList.containsKey(animalName)) {
@@ -49,17 +57,104 @@ public class AnimalController {
         return animalList;
     }
 
-    public static void raceCompetition(List<Animal> animalList) {
-        if (animalList.isEmpty()) {
-            System.out.println("There is no any animal for this race, please retry again!");
-            return;
+    private static List<Animal> generateAnimalListManual() {
+        // Init variables
+        int totalAnimal;
+        List<Animal> animalList = new ArrayList<>();
+        // Get user input
+        totalAnimal = getTotalAnimal();
+
+        for (int index = 0; index < totalAnimal; index++) {
+            String animalName;
+            int animalSpeed;
+            int flyAbleKey;
+            AnimalBuilder animalBuilder = new AnimalBuilder();
+            System.out.printf("Enter information for animal %d:\n", (index + 1));
+            System.out.print("Enter animal's name: ");
+            animalName = new Scanner(System.in).nextLine();
+            System.out.print("Enter animal's speed: ");
+            animalSpeed = new Scanner(System.in).nextInt();
+            System.out.print("Can this animal fly: \n");
+            System.out.print("- Can fly = not 0\n");
+            System.out.print("- Cannot fly = 0\n");
+            System.out.print("Enter animal fly able option: ");
+            flyAbleKey = new Scanner(System.in).nextInt();
+            if (flyAbleKey != 0) {
+                animalList.add(new Animal(animalBuilder.setName(animalName).setSpeed(animalSpeed).setFlyAble(true)));
+            } else {
+                animalList.add(new Animal(animalBuilder.setName(animalName).setSpeed(animalSpeed).setFlyAble(false)));
+            }
+            System.out.println("");
         }
+        return animalList;
+    }
+
+    private static int getTotalAnimal() {
+        int totalAnimal;
+        while (true) {
+            System.out.print("Enter the total of animal: ");
+            totalAnimal = new Scanner(System.in).nextInt();
+
+            if (totalAnimal < 1) {
+                System.out.println("Please enter at least one animal for this race competition!");
+            } else {
+                break;
+            }
+        }
+        return totalAnimal;
+    }
+
+    private static String getAnimalName(int randomNumber) {
+        Object[] list = animalDefaultList.keySet().toArray();
+        return list[randomNumber].toString();
+    }
+
+    private static int getAnimalSpeed(String animalName) {
+        return new SecureRandom().nextInt(animalDefaultList.get(animalName) + 1);
+    }
+
+    private static boolean getFlyAbleKey(String animalName) {
+        return switch (animalName.toLowerCase()) {
+            case "eagle", "falcon", "owl" -> true;
+            default -> false;
+        };
+    }
+
+    private static List<Animal> createSignUpReport(List<Animal> fullAnimalList) {
+        // Init variables
+        List<Animal> eligibleAnimalList = new ArrayList<>();
+        List<Animal> notEligibleAnimalList = new ArrayList<>();
+
+        // Display data
+        System.out.println("============================ SIGN UP REPORT ============================");
+        System.out.println("========================================================================");
+        System.out.println("The eligible animal(s):");
+        for (Animal animal : fullAnimalList) {
+            if (animal.isFlyAble()) {
+                notEligibleAnimalList.add(animal);
+            } else {
+                eligibleAnimalList.add(animal);
+                System.out.println(animal.getName());
+            }
+        }
+        System.out.println("");
+        System.out.println("========================================================================");
+        System.out.println("The not eligible animal(s):");
+        for (Animal animal : notEligibleAnimalList) {
+            System.out.println(animal.getName());
+        }
+        System.out.println("");
+        return eligibleAnimalList;
+    }
+
+    private static void raceCompetition(List<Animal> animalList) {
         List<Animal> eligibleAnimalList = createSignUpReport(animalList);
         if (eligibleAnimalList.isEmpty()) {
             System.out.println("There is no any eligible animal for this race, please retry again!");
             return;
         }
-        Collections.sort(eligibleAnimalList, (a1, a2) -> a1.getSpeed() > a2.getSpeed() ? -1 : 1);
+
+        eligibleAnimalList.sort((a1, a2) -> a1.getSpeed() > a2.getSpeed() ? -1 : 0);
         System.out.println("====================== THE RACE COMPETITION BEGIN ======================");
         for (int index = 0; index < eligibleAnimalList.size(); index++) {
             if (index == 0) {
@@ -72,85 +167,5 @@ public class AnimalController {
         }
     }
 
-    private static String getAnimalName(int randomNumber) {
-        return animalNameList[randomNumber];
-    }
-
-    private static int getAnimalSpeed(String animalName) {
-        switch (animalName.toLowerCase()) {
-            case "mouse":
-                return new SecureRandom().nextInt(AnimalMaxSpeed.MOUSE + 1);
-            case "cat":
-                return new SecureRandom().nextInt(AnimalMaxSpeed.CAT + 1);
-            case "dog":
-                return new SecureRandom().nextInt(AnimalMaxSpeed.DOG + 1);
-            case "tiger":
-                return new SecureRandom().nextInt(AnimalMaxSpeed.TIGER + 1);
-            case "lion":
-                return new SecureRandom().nextInt(AnimalMaxSpeed.LION + 1);
-            case "bear":
-                return new SecureRandom().nextInt(AnimalMaxSpeed.BEAR + 1);
-            case "pig":
-                return new SecureRandom().nextInt(AnimalMaxSpeed.PIG + 1);
-            case "goat":
-                return new SecureRandom().nextInt(AnimalMaxSpeed.GOAT + 1);
-            case "fox":
-                return new SecureRandom().nextInt(AnimalMaxSpeed.FOX + 1);
-            case "cow":
-                return new SecureRandom().nextInt(AnimalMaxSpeed.COW + 1);
-            case "horse":
-                return new SecureRandom().nextInt(AnimalMaxSpeed.HORSE + 1);
-            case "rabbit":
-                return new SecureRandom().nextInt(AnimalMaxSpeed.RABBIT + 1);
-            case "eagle":
-                return new SecureRandom().nextInt(AnimalMaxSpeed.EAGLE + 1);
-            case "falcon":
-                return new SecureRandom().nextInt(AnimalMaxSpeed.FALCON + 1);
-            case "owl":
-                return new SecureRandom().nextInt(AnimalMaxSpeed.OWL + 1);
-            case "snake":
-                return new SecureRandom().nextInt(AnimalMaxSpeed.SNAKE + 1);
-            default:
-                return 0;
-        }
-    }
-
-    private static boolean getFlyAbleKey(String animalName) {
-        switch (animalName.toLowerCase()) {
-            case "eagle":
-            case "falcon":
-            case "owl":
-                return true;
-            default:
-                return false;
-        }
-    }
-
-    private static List<Animal> createSignUpReport(List<Animal> fullAnimalList) {
-        // Init variables
-        List<Animal> eligibleAnimalList = new ArrayList<>();
-        List<Animal> notEligibleAnimalList = new ArrayList<>();
-
-        // Display data
-        System.out.println("============================ SIGN UP REPORT ============================");
-        System.out.println("========================================================================");
-        System.out.println("The eligible animal(s):");
-        for (int index = 0; index < fullAnimalList.size(); index++) {
-            if (fullAnimalList.get(index).isFlyAble()) {
-                notEligibleAnimalList.add(fullAnimalList.get(index));
-            } else {
-                eligibleAnimalList.add(fullAnimalList.get(index));
-                System.out.println(fullAnimalList.get(index).getName());
-            }
-        }
-        System.out.println("");
-        System.out.println("========================================================================");
-        System.out.println("The not eligible animal(s):");
-        for (int index = 0; index < notEligibleAnimalList.size(); index++) {
-            System.out.println(notEligibleAnimalList.get(index).getName());
-        }
-        System.out.println("");
-        return eligibleAnimalList;
-    }
 
 }
