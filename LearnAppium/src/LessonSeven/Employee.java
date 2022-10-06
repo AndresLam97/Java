@@ -11,10 +11,10 @@ public class Employee {
     }
 
     public Employee(String id) {
-        if (id.toUpperCase().equals("FTE")) {
+        if (id.equalsIgnoreCase("FTE")) {
             this.salary = 50000;
         }
-        if (id.toUpperCase().equals("CON")) {
+        if (id.equalsIgnoreCase("CON")) {
             this.salary = 40000;
         }
     }

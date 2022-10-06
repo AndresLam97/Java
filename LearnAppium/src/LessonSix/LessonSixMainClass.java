@@ -39,7 +39,7 @@ public class LessonSixMainClass {
                 default:
                     System.out.println("You entered a number other than 1-5, please retry again");
             }
-            System.out.println("");
+            System.out.println();
         }
     }
 
@@ -91,7 +91,7 @@ public class LessonSixMainClass {
     public void Lab63() {
         // Declare variables
         String userString;
-        String newString = new String("");
+        String newString = "";
 
         // Get user input
         System.out.print("Enter your string: ");

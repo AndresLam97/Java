@@ -19,13 +19,13 @@ public class LessonNineMainClass {
             int userOption = new Scanner(System.in).nextInt();
 
             switch (userOption) {
-                case 1 -> AnimalController.lab9WithAuto();
-                case 2 -> AnimalController.lab9WithManual();
-                case 3 -> keyValue = false;
-                default -> System.out.println("You entered a number other than 1-3, please retry again");
+                case 1 : AnimalController.lab9WithAuto();
+                case 2 : AnimalController.lab9WithManual();
+                case 3 : keyValue = false;
+                default : System.out.println("You entered a number other than 1-3, please retry again");
             }
 
-            System.out.println("");
+            System.out.println();
         }
     }
 

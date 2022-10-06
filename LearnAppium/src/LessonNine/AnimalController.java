@@ -84,7 +84,7 @@ public class AnimalController {
             } else {
                 animalList.add(new Animal(animalBuilder.setName(animalName).setSpeed(animalSpeed).setFlyAble(false)));
             }
-            System.out.println("");
+            System.out.println();
         }
         return animalList;
     }
@@ -114,10 +114,12 @@ public class AnimalController {
     }
 
     private static boolean getFlyAbleKey(String animalName) {
-        return switch (animalName.toLowerCase()) {
-            case "eagle", "falcon", "owl" -> true;
-            default -> false;
-        };
+        switch (animalName.toLowerCase()) {
+            case "eagle":
+            case "falcon":
+            case "owl": return true;
+            default: return false;
+        }
     }
 
     private static List<Animal> createSignUpReport(List<Animal> fullAnimalList) {
@@ -137,13 +139,13 @@ public class AnimalController {
                 System.out.println(animal.getName());
             }
         }
-        System.out.println("");
+        System.out.println();
         System.out.println("========================================================================");
         System.out.println("The not eligible animal(s):");
         for (Animal animal : notEligibleAnimalList) {
             System.out.println(animal.getName());
         }
-        System.out.println("");
+        System.out.println();
         return eligibleAnimalList;
     }
 

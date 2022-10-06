@@ -32,7 +32,7 @@ public class LessonEightMainClass {
                 default:
                     System.out.println("You entered a number other than 1-3, please retry again");
             }
-            System.out.println("");
+            System.out.println();
         }
     }
 

@@ -2,9 +2,9 @@ package LessonNine;
 
 // Outer Class
 public class Animal {
-    private String name;
-    private int speed;
-    private boolean flyAble;
+    private final String name;
+    private final int speed;
+    private final boolean flyAble;
 
     public Animal(AnimalBuilder animal)
     {

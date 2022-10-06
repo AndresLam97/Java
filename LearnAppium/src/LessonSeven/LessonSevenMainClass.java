@@ -26,12 +26,12 @@ public class LessonSevenMainClass {
 
     static List<Employee> generateEmployeeList(int totalEmployee, String employeeId) {
         List<Employee> employeeList = new ArrayList<>();
-        if (employeeId.toUpperCase().equals("FTE")) {
+        if (employeeId.equalsIgnoreCase("FTE")) {
             for (int index = 0; index < totalEmployee; index++) {
                 employeeList.add(new Employee("FTE"));
             }
         }
-        if (employeeId.toUpperCase().equals("CON")) {
+        if (employeeId.equalsIgnoreCase("CON")) {
             for (int index = 0; index < totalEmployee; index++) {
                 employeeList.add(new Employee("CON"));
             }

@@ -6,7 +6,7 @@ public class LessonThree {
 
     int[] initArray()
     {
-        int integerArray[];
+        int[] integerArray;
         int arrayLength;
         Scanner sc = new Scanner(System.in);
 
@@ -31,7 +31,7 @@ public class LessonThree {
         for (int i = 0; i < integerArray.length; i++) {
             System.out.printf("%d ",integerArray[i]);
         }
-        System.out.println("");
+        System.out.println();
     }
 
     void findOddAndEvenNumber(int[] integerArray)
@@ -161,7 +161,7 @@ public class LessonThree {
 
         mergeWithTwoSortedArray = lessonThree.mergeTwoSortedArray2(integerArray,integerArray2);
 
-        System.out.println("");
+        System.out.println();
         System.out.print("Two arrays after merge: ");
         lessonThree.displayArray(mergeWithTwoSortedArray);
     }
