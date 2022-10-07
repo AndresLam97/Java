@@ -22,15 +22,18 @@ public class AnimalController {
     public static List<Animal> addAnimal(List<Animal> currentAnimalList) {
         List<Animal> addAnimalList = new ArrayList<>();
         int totalAnimal = inputNumberOfAnimal();
+        List<String> animalNameList = getAnimalNameList(currentAnimalList);
         for (int index = 0; index < totalAnimal; index++) {
             String animalName;
             do {
                 System.out.print("Enter the animal's name: ");
                 animalName = new Scanner(System.in).nextLine();
-                if (currentAnimalList.contains(animalName)) {
+                if (animalNameList.contains(animalName)) {
                     System.out.println("The animal name is existed, please use the another one.");
+                    continue;
                 }
-            } while (currentAnimalList.contains(animalName));
+                break;
+            } while (true);
 
             System.out.print("Enter the animal's speed: ");
             int animalSpeed = new Scanner(System.in).nextInt();
@@ -47,12 +50,15 @@ public class AnimalController {
             switch (animalType) {
                 case 1:
                     addAnimalList.add(new UserDefineAnimal(animalName, animalSpeed, "aerial"));
+                    animalNameList.add(animalName);
                     break;
                 case 2:
                     addAnimalList.add(new UserDefineAnimal(animalName, animalSpeed, "land"));
+                    animalNameList.add(animalName);
                     break;
                 case 3:
                     addAnimalList.add(new UserDefineAnimal(animalName, animalSpeed, "marine"));
+                    animalNameList.add(animalName);
                     break;
             }
         }
@@ -238,6 +244,13 @@ public class AnimalController {
             }
         } while (totalOfAnimal == 0 || totalOfAnimal < 0);
         return totalOfAnimal;
+    }
+
+    private static List<String> getAnimalNameList(List<Animal> animalList)
+    {
+        List<String> animalNameList = new ArrayList<>();
+        animalList.stream().forEach(e -> animalNameList.add(e.getName()));
+        return animalNameList;
     }
 
 }
