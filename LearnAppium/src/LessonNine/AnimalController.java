@@ -156,7 +156,7 @@ public class AnimalController {
             return;
         }
 
-        eligibleAnimalList.sort((a1, a2) -> a1.getSpeed() > a2.getSpeed() ? -1 : 0);
+        Collections.sort(eligibleAnimalList,(a1,a2) -> a1.getSpeed() > a2.getSpeed() ? -1 : 1);
         System.out.println("====================== THE RACE COMPETITION BEGIN ======================");
         for (int index = 0; index < eligibleAnimalList.size(); index++) {
             if (index == 0) {
