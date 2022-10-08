@@ -1,5 +1,9 @@
 package LessonTen;
 
+import LessonTen.LandAnimals.*;
+import LessonTen.AerialAnimals.*;
+import LessonTen.MarineAnimals.*;
+
 import java.security.SecureRandom;
 import java.util.*;
 
@@ -7,17 +11,16 @@ public class AnimalController {
 
     private static Map<String, Integer> supportedAnimalList = SupportedAnimalList.getSupportedAnimalList();
 
-   /* public static List<Animal> generateAnimal() {
+    public static List<Animal> generateAnimal() {
         List<Animal> animalList = new ArrayList<>();
         int totalAnimal = inputNumberOfAnimal();
+        Map<String, Integer> animalCountList = new HashMap<>();
         for (int index = 0; index < totalAnimal; index++) {
-            animalList.add(
-                    createAnimal(
-                            new SecureRandom().nextInt(supportedAnimalList.size())));
+            animalList.add(createAnimal(animalCountList, new SecureRandom().nextInt(supportedAnimalList.size())));
         }
         System.out.println("Generate animals successfully");
         return animalList;
-    }*/
+    }
 
     public static List<Animal> addAnimal(List<Animal> currentAnimalList) {
         List<Animal> addAnimalList = new ArrayList<>();
@@ -34,10 +37,8 @@ public class AnimalController {
                 }
                 break;
             } while (true);
-
             System.out.print("Enter the animal's speed: ");
             int animalSpeed = new Scanner(System.in).nextInt();
-
             int animalType = 0;
             do {
                 System.out.println("What is the type of this animal: (1) Aerial (2) Land (3) Marine");
@@ -45,7 +46,7 @@ public class AnimalController {
                 if ((animalType > 3) || (animalType <= 0)) {
                     System.out.println("Please enter the number from 1 to 3.");
                 }
-            } while (animalType <= 0);
+            } while (animalType > 3 || animalType <= 0);
 
             switch (animalType) {
                 case 1:
@@ -96,6 +97,7 @@ public class AnimalController {
             System.out.println("There is no any eligible animal for this race, please retry again!");
             return;
         }
+        newAnimalList.sort((a1, a2) -> a1.getSpeed() > a2.getSpeed() ? -1 : 1);
         System.out.println("====================== THE RACE COMPETITION BEGIN ======================");
         for (int index = 0; index < newAnimalList.size(); index++) {
             if (index == 0) {
@@ -151,7 +153,7 @@ public class AnimalController {
         System.out.println("========================================================================");
         System.out.println("The eligible animal(s):");
         for (Animal animal : fullAnimalList) {
-            if (eligibleAnimalList.contains(animal.getTYPE())) {
+            if (eligibleList.contains(animal.getTYPE())) {
                 eligibleAnimalList.add(animal);
                 System.out.println(animal.getName());
             } else {
@@ -165,89 +167,79 @@ public class AnimalController {
             System.out.println(animal.getName());
         }
         System.out.println("");
-        eligibleAnimalList.sort((a1, a2) -> a1.getSpeed() > a2.getSpeed() ? 1 : 0);
         return eligibleAnimalList;
     }
 
-    /*private static Animal createAnimal(int number) {
+    private static Animal createAnimal(Map<String, Integer> animalCountList, int number) {
         switch (number) {
+            case 0:
+                return new Mouse(checkAndGetAnimalName(animalCountList, "Mouse"));
             case 1:
-                return new
+                return new Cat(checkAndGetAnimalName(animalCountList, "Cat"));
             case 2:
-                return
+                return new Dog(checkAndGetAnimalName(animalCountList, "Dog"));
             case 3:
-                return
+                return new Tiger(checkAndGetAnimalName(animalCountList, "Tiger"));
             case 4:
-                return
+                return new Lion(checkAndGetAnimalName(animalCountList, "Lion"));
             case 5:
-                return
+                return new Bear(checkAndGetAnimalName(animalCountList, "Bear"));
             case 6:
-                return
+                return new Pig(checkAndGetAnimalName(animalCountList, "Pig"));
             case 7:
-                return
+                return new Goat(checkAndGetAnimalName(animalCountList, "Goat"));
             case 8:
-                return
+                return new Fox(checkAndGetAnimalName(animalCountList, "Fox"));
             case 9:
-                return
+                return new Cow(checkAndGetAnimalName(animalCountList, "Cow"));
             case 10:
-                return
+                return new Horse(checkAndGetAnimalName(animalCountList, "Horse"));
             case 11:
-                return
+                return new Rabbit(checkAndGetAnimalName(animalCountList, "Rabbit"));
             case 12:
-                return
+                return new Snake(checkAndGetAnimalName(animalCountList, "Snake"));
             case 13:
-                return
+                return new Eagle(checkAndGetAnimalName(animalCountList, "Eagle"));
             case 14:
-                return
+                return new Falcon(checkAndGetAnimalName(animalCountList, "Falcon"));
             case 15:
-                return
+                return new Owl(checkAndGetAnimalName(animalCountList, "Owl"));
             case 16:
-                return
+                return new DelphinusDelphis(checkAndGetAnimalName(animalCountList, "Delphinus Delphis"));
             case 17:
-                return
+                return new KillerWhale(checkAndGetAnimalName(animalCountList, "Killer Whale"));
             case 18:
-                return
-            case 19:
-                return
-            case 20:
-                return
-            case 21:
-                return
-            case 22:
-                return
-            case 23:
-                return
-            case 24:
-                return
-            case 25:
-                return
-            case 26:
-                return
-            case 27:
-                return
-            case 28:
-                return
-            case 29:
-                return
-            case 30:
-                return
+                return new WhiteShark(checkAndGetAnimalName(animalCountList, "White Shark"));
+            default:
+                return new UserDefineAnimal("Undefined", 0, "No Type");
         }
-    }*/
+    }
+
+    private static String checkAndGetAnimalName(Map<String, Integer> animalCountList, String name) {
+        Set<String> keySet = animalCountList.keySet();
+        if (keySet.contains(name)) {
+            int currentValue = animalCountList.get(name);
+            animalCountList.put(name, currentValue + 1);
+            return name + " " + (currentValue + 1);
+        } else {
+            animalCountList.put(name, 1);
+            return name + " " + 1;
+        }
+    }
 
     private static int inputNumberOfAnimal() {
         int totalOfAnimal = 0;
         do {
             System.out.print("Enter total of animal(s): ");
             totalOfAnimal = new Scanner(System.in).nextInt();
-            if (totalOfAnimal == 0) {
+            if (totalOfAnimal <= 0) {
                 System.out.println("Please enter at least one animal.");
             }
-        } while (totalOfAnimal == 0 || totalOfAnimal < 0);
+        } while (totalOfAnimal <= 0);
         return totalOfAnimal;
     }
 
-    private static List<String> getAnimalNameList(List<Animal> animalList)
-    {
+    private static List<String> getAnimalNameList(List<Animal> animalList) {
         List<String> animalNameList = new ArrayList<>();
         animalList.stream().forEach(e -> animalNameList.add(e.getName()));
         return animalNameList;

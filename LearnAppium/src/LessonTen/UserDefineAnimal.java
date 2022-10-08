@@ -2,16 +2,13 @@ package LessonTen;
 
 public class UserDefineAnimal extends Animal{
 
-    private String name;
-    private int speed;
     private String type;
 
     UserDefineAnimal(){};
 
     UserDefineAnimal(String name,int speed,String type)
     {
-        this.name = name;
-        this.speed = speed;
+        super(name,speed);
         this.type = type;
     }
 

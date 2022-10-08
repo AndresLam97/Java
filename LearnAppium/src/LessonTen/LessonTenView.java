@@ -23,7 +23,7 @@ public class LessonTenView {
             switch(userOption)
             {
                 case 1:
-                    //animalList.addAll(AnimalController.generateAnimal());
+                    animalList.addAll(AnimalController.generateAnimal());
                     break;
                 case 2:
                     animalList.addAll(AnimalController.addAnimal(animalList));
