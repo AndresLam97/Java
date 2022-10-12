@@ -1,8 +1,6 @@
 package LessonEleven.RacingFeatureController;
 
-import LessonEleven.AnimalAbilities.AnimalAbilities;
-import LessonTen.Animal;
-import LessonTen.AnimalController;
+import LessonEleven.AnimalAbility.AnimalAbilities;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +19,8 @@ public class MainViewController {
             System.out.println("3. Check the animal list.");
             System.out.println("4. Check the animal supported by program.");
             System.out.println("5. Go to the race competition.");
-            System.out.println("6. Exit");
+            System.out.println("6. Clear the animal list.");
+            System.out.println("7. Exit");
             System.out.print("Enter your option: ");
             int userOption = new Scanner(System.in).nextInt();
             switch(userOption)
@@ -42,10 +41,13 @@ public class MainViewController {
                     RacingCompetitionController.raceCompetition(animalList);
                     break;
                 case 6:
+                    RacingCompetitionController.clearTheAnimalList(animalList);
+                    break;
+                case 7:
                     keyValue = false;
                     break;
                 default:
-                    System.out.println("Please enter the number from 1 to 6.");
+                    System.out.println("Please enter the number from 1 to 7.");
             }
             System.out.println("");
         }

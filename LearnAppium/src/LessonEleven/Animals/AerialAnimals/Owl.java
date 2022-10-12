@@ -1,13 +1,12 @@
 package LessonEleven.Animals.AerialAnimals;
 
-import LessonEleven.AnimalAbilities.AerialAbilities;
-import LessonEleven.AnimalAbilities.AnimalAbilities;
-import LessonEleven.AnimalAbilities.LandAbilities;
-import LessonEleven.AnimalAbilities.MarineAbilities;
+import LessonEleven.AnimalAbility.AerialAbilities;
+import LessonEleven.AnimalAbility.AnimalAbilities;
+import LessonEleven.AnimalAbility.LandAbilities;
+import LessonEleven.AnimalAbility.MarineAbilities;
 
 import java.security.SecureRandom;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class Owl implements AnimalAbilities, LandAbilities, AerialAbilities, MarineAbilities {
@@ -55,9 +54,12 @@ public class Owl implements AnimalAbilities, LandAbilities, AerialAbilities, Mar
 
     @Override
     public List<String> getAbilitiesList() {
-        List<String> abilitiesList = new ArrayList<>(Arrays.asList("fly"));
+        List<String> abilitiesList = new ArrayList<>();
+        if(this.flyAble()) {abilitiesList.add("fly");}
+        else if (this.runAble()) {abilitiesList.add("run");}
+        else if (this.swimAble()) {abilitiesList.add("swim");}
+        else { return abilitiesList; }
         return abilitiesList;
     }
-
 
 }

@@ -1,18 +1,18 @@
 package LessonEleven.Animals.LandAnimals;
 
-import LessonEleven.AnimalAbilities.AerialAbilities;
-import LessonEleven.AnimalAbilities.AnimalAbilities;
-import LessonEleven.AnimalAbilities.LandAbilities;
-import LessonEleven.AnimalAbilities.MarineAbilities;
+import LessonEleven.AnimalAbility.*;
 
 import java.security.SecureRandom;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Fox implements AnimalAbilities, LandAbilities, AerialAbilities, MarineAbilities {
     private String name;
     private int speed;
     private final int MAXIMUM_SPEED = 68;
 
-    public Fox() { }
+    public Fox() {
+    }
 
     public Fox(String name) {
         this.name = name;
@@ -40,10 +40,27 @@ public class Fox implements AnimalAbilities, LandAbilities, AerialAbilities, Mar
     }
 
     @Override
-    public String getInformation() { return "The " + this.name + " is a land animal and has a speed of " + this.speed + " km/h"; }
+    public String getInformation() {
+        return "The " + this.name + " is a land animal and has a speed of " + this.speed + " km/h";
+    }
 
     @Override
-    public String getName() { return this.name; }
+    public String getName() {
+        return this.name;
+    }
 
-
+    @Override
+    public List<String> getAbilitiesList() {
+        List<String> abilitiesList = new ArrayList<>();
+        if (this.flyAble()) {
+            abilitiesList.add(ConstantAbilities.FLY_ABLE);
+        }
+        if (this.runAble()) {
+            abilitiesList.add(ConstantAbilities.RUN_ABLE);
+        }
+        if (this.swimAble()) {
+            abilitiesList.add(ConstantAbilities.SWIM_ABLE);
+        }
+        return abilitiesList;
+    }
 }

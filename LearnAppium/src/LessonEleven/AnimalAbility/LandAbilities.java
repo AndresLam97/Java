@@ -1,4 +1,4 @@
-package LessonEleven.AnimalAbilities;
+package LessonEleven.AnimalAbility;
 
 public interface LandAbilities {
     public boolean runAble();
