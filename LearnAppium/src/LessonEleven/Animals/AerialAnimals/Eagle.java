@@ -1,13 +1,9 @@
 package LessonEleven.Animals.AerialAnimals;
 
-import LessonEleven.AnimalAbilities.AerialAbilities;
-import LessonEleven.AnimalAbilities.AnimalAbilities;
-import LessonEleven.AnimalAbilities.LandAbilities;
-import LessonEleven.AnimalAbilities.MarineAbilities;
+import LessonEleven.AnimalAbility.*;
 
 import java.security.SecureRandom;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class Eagle implements AnimalAbilities, LandAbilities, AerialAbilities, MarineAbilities {
@@ -55,7 +51,16 @@ public class Eagle implements AnimalAbilities, LandAbilities, AerialAbilities, M
 
     @Override
     public List<String> getAbilitiesList() {
-        List<String> abilitiesList = new ArrayList<>(Arrays.asList("fly"));
+        List<String> abilitiesList = new ArrayList<>();
+        if (this.flyAble()) {
+            abilitiesList.add(ConstantAbilities.FLY_ABLE);
+        }
+        if (this.runAble()) {
+            abilitiesList.add(ConstantAbilities.RUN_ABLE);
+        }
+        if (this.swimAble()) {
+            abilitiesList.add(ConstantAbilities.SWIM_ABLE);
+        }
         return abilitiesList;
     }
 }
