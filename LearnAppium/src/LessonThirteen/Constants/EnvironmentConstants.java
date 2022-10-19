@@ -1,6 +1,6 @@
 package LessonThirteen.Constants;
 
-public enum EvironmentConstants {
+public enum EnvironmentConstants {
     FILE,
     DATABASE;
 }

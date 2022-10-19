@@ -19,7 +19,8 @@ public class ValidateDataController {
                 }
             }
         } catch (Exception ex) {
-            result.put(false, ex.toString());
+            result.put(false, ex.getMessage());
+            return result;
         }
         result.put(true, "Success");
         return result;
@@ -48,20 +49,31 @@ public class ValidateDataController {
             if (Integer.parseInt(publicationDate[0]) < 1 || Integer.parseInt(publicationDate[0]) > 12) {
                 throw new Exception("Please input the month between 1 and 12!");
             }
-            if (Integer.parseInt(publicationDate[0]) == 2 && isLeapYear) {
-                if (Integer.parseInt(publicationDate[1]) < 1 || Integer.parseInt(publicationDate[1]) > 29) {
-                    throw new Exception("Please input the day between 1 and 29!");
-                }
-            } else if (Integer.parseInt(publicationDate[0]) == 2 && !isLeapYear) {
-                if (Integer.parseInt(publicationDate[1]) < 1 || Integer.parseInt(publicationDate[1]) > 28) {
-                    throw new Exception("Please input the day between 1 and 28!");
-                }
+            if ((Integer.parseInt(publicationDate[0]) == 2 && isLeapYear) &&
+                    (Integer.parseInt(publicationDate[1]) < 1 || Integer.parseInt(publicationDate[1]) > 29)) {
+                throw new Exception("Please input the day between 1 and 29!");
+            }
+            if ((Integer.parseInt(publicationDate[0]) == 2 && !isLeapYear) &&
+                    (Integer.parseInt(publicationDate[1]) < 1 || Integer.parseInt(publicationDate[1]) > 28)) {
+                throw new Exception("Please input the day between 1 and 28!");
+            }
+            if ((Integer.parseInt(publicationDate[1]) < 1 || Integer.parseInt(publicationDate[1]) > 31) &&
+                    (Integer.parseInt(publicationDate[0]) == 1 || Integer.parseInt(publicationDate[0]) == 3 ||
+                            Integer.parseInt(publicationDate[0]) == 5 || Integer.parseInt(publicationDate[0]) == 7 ||
+                            Integer.parseInt(publicationDate[0]) == 8 || Integer.parseInt(publicationDate[0]) == 10 ||
+                            Integer.parseInt(publicationDate[0]) == 12)) {
+                throw new Exception("Please input the day between 1 and 31!");
+            }
+            if ((Integer.parseInt(publicationDate[1]) < 1 || Integer.parseInt(publicationDate[1]) > 30) &&
+                    (Integer.parseInt(publicationDate[0]) == 4 || Integer.parseInt(publicationDate[0]) == 6 ||
+                            Integer.parseInt(publicationDate[0]) == 9 || Integer.parseInt(publicationDate[0]) == 11)) {
+                throw new Exception("Please input the day between 1 and 30!");
             }
             if (Integer.parseInt(publicationDate[2]) < 0) {
                 throw new Exception("Please input the positive year value!");
             }
         } catch (Exception ex) {
-            result.put(false, ex.toString());
+            result.put(false, ex.getMessage());
             return result;
         }
         result.put(true, "Success");

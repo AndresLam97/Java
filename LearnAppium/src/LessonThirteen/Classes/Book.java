@@ -52,8 +52,10 @@ public class Book {
         this.pageNumber = pageNumber;
     }
 
-    public Calendar getPublicationDate() {
-        return publicationDate;
+    public String getPublicationDate() {
+        return String.format("%d/%d/%d",
+                this.publicationDate.get(Calendar.MONTH), this.publicationDate.get(Calendar.DAY_OF_MONTH),
+                this.publicationDate.get(Calendar.YEAR));
     }
 
     public void setPublicationDate(Calendar publicationDate) {
@@ -61,11 +63,13 @@ public class Book {
     }
 
     public String toString() {
-        return String.format("ISDN: %d.\n" +
-                "Book name: %s.\n" +
-                "Author: %s.\n" +
-                "Page number: %d.\n" +
-                "Publication date: %s.\n", this.iSBN, this.bookName, this.authorName, this.pageNumber, this.publicationDate.toString());
+        return String.format("- ISDN: %d.\n" +
+                "- Book name: %s.\n" +
+                "- Author: %s.\n" +
+                "- Page number: %d.\n" +
+                "- Publication date: %d/%d/%d.", this.iSBN, this.bookName, this.authorName,
+                this.pageNumber, this.publicationDate.get(Calendar.MONTH), this.publicationDate.get(Calendar.DAY_OF_MONTH),
+                this.publicationDate.get(Calendar.YEAR));
     }
 
 }

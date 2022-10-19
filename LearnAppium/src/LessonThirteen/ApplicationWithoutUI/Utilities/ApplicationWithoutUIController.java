@@ -1,6 +1,7 @@
 package LessonThirteen.ApplicationWithoutUI.Utilities;
 
 import LessonThirteen.Classes.Book;
+import LessonThirteen.Constants.EnvironmentConstants;
 
 import java.util.*;
 
@@ -28,11 +29,14 @@ public class ApplicationWithoutUIController {
 
     public static int inputISBN() {
         int bookISBN = 0;
-        try {
-            System.out.print("Input the book ISBN: ");
-            bookISBN = new Scanner(System.in).nextInt();
-        } catch (Exception ex) {
-            System.out.println("Please input the number type only!");
+        while (true) {
+            try {
+                System.out.print("Please input ISBN: ");
+                bookISBN = new Scanner(System.in).nextInt();
+                break;
+            } catch (Exception ex) {
+                System.out.println("Please input the number type only!");
+            }
         }
         return bookISBN;
     }
@@ -54,7 +58,7 @@ public class ApplicationWithoutUIController {
     public static String inputAuthorName() {
         String authorName = "";
         while (true) {
-            System.out.print("Please input book name: ");
+            System.out.print("Please input author name: ");
             authorName = new Scanner(System.in).nextLine();
             if (ValidateDataController.validateAuthorName(authorName)) {
                 System.out.println("Please input at least one character!");
@@ -69,7 +73,7 @@ public class ApplicationWithoutUIController {
         int pageNumber = 0;
         while (true) {
             try {
-                System.out.print("Please input ISBN: ");
+                System.out.print("Please input page number: ");
                 pageNumber = new Scanner(System.in).nextInt();
                 if (ValidateDataController.validatePageNumber(pageNumber)) {
                     System.out.println("Please input the positive number only!");
@@ -106,21 +110,24 @@ public class ApplicationWithoutUIController {
         return publicationDate;
     }
 
-    public static void updateBookRecord(int bookIndex, List<Book> currentBookList)
-    {
-        currentBookList.get(bookIndex).setiSBN(inputISBN(currentBookList));
+    public static void updateBookRecord(int bookIndex, List<Book> currentBookList) {
+        currentBookList.get(bookIndex).setiSBN(inputISBN());
         currentBookList.get(bookIndex).setBookName(inputBookName());
         currentBookList.get(bookIndex).setAuthorName(inputAuthorName());
         currentBookList.get(bookIndex).setPageNumber(inputPageNumber());
         currentBookList.get(bookIndex).setPublicationDate(inputPublicationDate());
-        System.out.println("Update successfully");
+        System.out.println("Update successfully\n");
     }
 
-    public static Book findBookWithISBN(int bookISBN,List<Book> currentBookList)
-    {
-        for(int )
-
-
+    public static Map<Integer, Book> findBookWithISBN(int bookISBN, List<Book> currentBookList) {
+        Map<Integer, Book> foundedBook = new HashMap<>();
+        for (int index = 0; index < currentBookList.size(); index++) {
+            if (currentBookList.get(index).getiSBN() == bookISBN) {
+                foundedBook.put(index, currentBookList.get(index));
+                return foundedBook;
+            }
+        }
         return null;
     }
+
 }
