@@ -1,4 +1,4 @@
-package LessonThirteen.Application;
+package LessonThirteen.ApplicationWithinUI;
 import javax.swing.*;
 
 public class LessonThirteenMainClass {

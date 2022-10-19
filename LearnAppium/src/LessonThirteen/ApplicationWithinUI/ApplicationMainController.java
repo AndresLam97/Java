@@ -1,6 +1,6 @@
-package LessonThirteen.Application;
+package LessonThirteen.ApplicationWithinUI;
 
-import LessonThirteen.Login.LoginFrame;
+import LessonThirteen.ApplicationWithinUI.Login.LoginFrame;
 
 public class ApplicationMainController {
     public static void init()

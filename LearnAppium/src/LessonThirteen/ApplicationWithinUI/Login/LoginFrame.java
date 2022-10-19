@@ -1,7 +1,6 @@
-package LessonThirteen.Login;
+package LessonThirteen.ApplicationWithinUI.Login;
 
 import javax.swing.*;
-import javax.tools.Tool;
 import java.awt.*;
 
 public class LoginFrame extends JFrame {

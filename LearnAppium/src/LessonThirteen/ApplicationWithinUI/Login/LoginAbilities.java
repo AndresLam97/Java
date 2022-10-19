@@ -1,4 +1,4 @@
-package LessonThirteen.Login;
+package LessonThirteen.ApplicationWithinUI.Login;
 
 public interface LoginAbilities {
     boolean checkUserName(String userNameOrEmail);
