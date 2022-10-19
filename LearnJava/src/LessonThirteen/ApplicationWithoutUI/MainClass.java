@@ -1,6 +1,8 @@
 package LessonThirteen.ApplicationWithoutUI;
 
+import LessonThirteen.ApplicationWithoutUI.Utilities.ApplicationWithoutUIController;
 import LessonThirteen.ApplicationWithoutUI.Utilities.ApplicationWithoutUIView;
+import LessonThirteen.ApplicationWithoutUI.Utilities.WorkingWithResourcesController;
 
 import java.util.Scanner;
 
@@ -12,10 +14,11 @@ public class MainClass {
     private static void init() {
         boolean keyValue = true;
         ApplicationWithoutUIView applicationWithoutUIView = new ApplicationWithoutUIView();
+        WorkingWithResourcesController workingWithResourcesController = new WorkingWithResourcesController();
         while (keyValue) {
             System.out.println("======= Book Management Program (CRUD)============");
             System.out.println("1. New book.");
-            System.out.println("2. Find a book(ISBN).");
+            System.out.println("2. Find a book (ISBN).");
             System.out.println("3. Update a book.");
             System.out.println("4. Delete a book.");
             System.out.println("5. Print the book list.");
@@ -25,6 +28,7 @@ public class MainClass {
             switch (userOption) {
                 case 0:
                     keyValue = false;
+                    applicationWithoutUIView.exitProgram();
                     break;
                 case 1:
                     applicationWithoutUIView.newBook();
@@ -42,7 +46,7 @@ public class MainClass {
                     applicationWithoutUIView.printTheBookList();
                     break;
                 default:
-                    System.out.println("Please input the number from 0 to 5!");
+                    System.out.println("Please input the number from 0 to 5!\n");
             }
         }
     }

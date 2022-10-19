@@ -3,7 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/Appium.iml" filepath="$PROJECT_DIR$/.idea/Appium.iml" />
-      <module fileurl="file://$PROJECT_DIR$/LearnAppium/LearnAppium.iml" filepath="$PROJECT_DIR$/LearnAppium/LearnAppium.iml" />
+      <module fileurl="file://$PROJECT_DIR$/LearnJava/LearnJava.iml" filepath="$PROJECT_DIR$/LearnJava/LearnJava.iml" />
     </modules>
   </component>
 </project>
